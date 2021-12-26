@@ -86,9 +86,6 @@ public class Client_ex1 {
                     
                 }else if( str.startsWith("demana")){ // [ DEMANA..N]
                     dos.writeUTF(str);
-                    
-                    
-                    RepFitxerClient rf = new RepFitxerClient(sk);
     
                     int lbloc = 512; //no cal que sigui el mateix tamany en el emisor i receptor
 
@@ -117,6 +114,26 @@ public class Client_ex1 {
                     bo = new BufferedOutputStream(fileOutput);
                     System.out.println("El fitxer ocuparà " + lfic + " bytes");
                     
+                    byte b[] = new byte[(int) lbloc];
+
+                    long lleva = 0;
+                    while (lleva < lfic) {
+                        int leido;
+                        if (lfic - lleva > lbloc) {
+                            leido = in.read(b, 0, lbloc); //llegeix com al molt lbloc bytes, però pot ser que sigui altra quantitat menor
+                        } else {//falten menys bytes que lbloc
+                            leido = in.read(b, 0, (int) (lfic - lleva)); //llegeix com a molt tants bytes com falten
+                        }
+                        bo.write(b, 0, leido);
+                        lleva = lleva + leido; //per saber quants es porten llegits
+                        System.out.println("Bytes rebuts: " + leido + " portem: " + lleva + " bytes");
+                    }
+
+                    bo.close();
+                    //reanomena el fitxer
+                    File nufile = new File("rec_" + nomfich); //El fitxer ja està baixat. Se li ha de posar el nom final correcte. No li posem el que s'envia per si s'està provant al mateix ordinador
+                    nufile.delete();
+                    fo.renameTo(nufile);
                     
                 }else if( str.equals("out") ) break; // [ OUT ] 
                 
@@ -132,10 +149,5 @@ public class Client_ex1 {
         }
         
     }
-    
-    
-    
-     
 
-    
 }

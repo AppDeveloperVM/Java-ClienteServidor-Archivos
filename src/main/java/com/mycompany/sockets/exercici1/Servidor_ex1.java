@@ -109,11 +109,13 @@ public class Servidor_ex1 {
                     }
                     
                     if( str.startsWith("demana")){
-                        String archivo = str.substring(0, 6);
+                        
+                        String archivo = str.substring(6);
+                        //dos.writeUTF(archivo);
 
                         while (true) {
                             Socket skt = ssk.accept();
-                            Enviador ef = new Enviador(sk, "foto.png"); //posar el fitxer a enviar, podem posar-lo amb la ruta al fitxer  
+                            Enviador ef = new Enviador(sk, "foto.PNG"); //posar el fitxer a enviar, podem posar-lo amb la ruta al fitxer  
                         }
                         
                     }
